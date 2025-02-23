@@ -1,0 +1,15 @@
+Dependencies
+    ->Express
+    ->Mongoose
+    ->Dotenv
+    ->Body-Parser
+    ->Nodemon
+Connecting Database
+
+API Creations
+    Models
+        Vendors: usename,email,password
+        Firm:firName,area,category,region,offer,image
+        Products:producName,price,category,image,bestseller
+    controllers
+    Routers
