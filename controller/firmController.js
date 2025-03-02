@@ -27,10 +27,6 @@ const addFirm = async(req, res) => {
             res.status(404).json({ message: "Vendor not found" })
         }
 
-        // if (vendor.firm.length > 0) {
-        //     return res.status(400).json({ message: "vendor can have only one firm" });
-        // }
-
         const firm = new Firm({
             firmName,
             area,
@@ -74,4 +70,35 @@ const deleteFirmById = async(req, res) => {
         res.status(500).json({ error: "Internal server error" })
     }
 }
-module.exports = { addFirm: [upload.single('image'), addFirm],deleteFirmById }
+
+// ✅ Get All Firms
+const getAllFirms = async (req, res) => {
+    try {
+        const firms = await Firm.find().populate("vendor"); // Populating vendor details
+        if (firms.length === 0) {
+            return res.status(404).json({ message: "No firms found" });
+        }
+        res.status(200).json(firms);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+// ✅ Get Firm by ID
+const getFirmById = async (req, res) => {
+    try {
+        const firmId = req.params.firmId;
+        const firm = await Firm.findById(firmId).populate("vendor").populate("products"); // Populating vendor and products
+
+        if (!firm) {
+            return res.status(404).json({ message: "Firm not found" });
+        }
+        res.status(200).json(firm);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+module.exports = { addFirm: [upload.single('image'), addFirm],deleteFirmById, getAllFirms, getFirmById }
