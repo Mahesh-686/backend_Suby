@@ -20,6 +20,7 @@ const verifyToken = async (req, res, next) => {
         const token = authHeader.split(" ")[1]; // Extract token
         const decoded = jwt.verify(token, secretKey); // Verify token
 
+
         const vendor = await Vendor.findById(decoded.vendorId);
         if (!vendor) {
             return res.status(404).json({ error: "Vendor not found" });
@@ -27,6 +28,7 @@ const verifyToken = async (req, res, next) => {
 
         req.vendorId = vendor._id; // Attach vendor ID to request
         next(); // Continue to next middleware
+
     } catch (error) {
         console.error("JWT Verification Error:", error.message);
         return res.status(401).json({ error: "Invalid Token" });

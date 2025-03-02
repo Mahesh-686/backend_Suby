@@ -16,6 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const addFirm = async(req, res) => {
+    console.log('adding firm');
     try {
         const { firmName, area, category, region, offer } = req.body;
 

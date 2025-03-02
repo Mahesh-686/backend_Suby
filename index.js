@@ -29,7 +29,7 @@ app.listen(PORT,()=>{
     console.log(`Server started and running at ${PORT}`)
 });
 
-app.use('/',(req,res)=>{
+app.use('/cls',(req,res)=>{
     res.send("<h1>Welcome to SUBY")
 });
 
